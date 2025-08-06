@@ -1,0 +1,10 @@
+../../../datasets/JointTuner/subject/bear_plushie/00.jpg
+../../../datasets/JointTuner/subject/bear_plushie/01.jpg
+../../../datasets/JointTuner/subject/bear_plushie/02.jpg
+../../../datasets/JointTuner/subject/bear_plushie/03.jpg
+../../../datasets/JointTuner/subject/bear_plushie/04.jpg
+../../../datasets/JointTuner/motion_49f/person_playing_flute/00.mp4
+../../../datasets/JointTuner/motion_49f/person_playing_flute/01.mp4
+../../../datasets/JointTuner/motion_49f/person_playing_flute/02.mp4
+../../../datasets/JointTuner/motion_49f/person_playing_flute/03.mp4
+../../../datasets/JointTuner/motion_49f/person_playing_flute/04.mp4
