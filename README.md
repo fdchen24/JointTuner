@@ -1,7 +1,10 @@
 
 <p align="center">
 
-  <h2 align="center">JointTuner: Appearance-Motion Adaptive Joint Training for Customized Video Generation</h2>
+  <h2 align="center">
+  <img src="asserts/favicon.ico" alt="JointTuner Icon" width="48" height="48" style="vertical-align: middle; margin-right: 2px;">
+  JointTuner: Appearance-Motion Adaptive Joint Training for Customized Video Generation
+  </h2>
   <p align="center">
     <a href="https://fdchen24.github.io/"><strong>Fangda Chen</strong></a>
     ·
@@ -25,26 +28,26 @@ https://github.com/user-attachments/assets/a1eef2b4-55ba-43a9-998a-864970442244
 <em>JointTuner enables joint optimization of appearance and motion for high-fidelity customized video generation, mitigating concept interference and appearance contamination.</em>
 </p>
 
-## Task Definition
+## 🎯 Task Definition
 **Appearance-Motion Combined Customization** of Text-to-Video Diffusion Models: 
 Given reference images (for appearance) and reference videos (for motion), the task is to adapt pre-trained text-to-video diffusion models to generate videos that faithfully preserve the desired appearance while accurately replicating the target motion pattern.
 
-## Compatibility
+## 🔧 Compatibility
 JointTuner is architecture-agnostic and supports both:
 - **UNet-based models** (e.g., ZeroScope)
 - **Diffusion Transformer (DiT)-based models** (e.g., CogVideoX)
 
-## News
+## 📰 News
 - [2025.08.06] The code for JointTuner, implemented based on UNet (e.g., ZeroScope and ModelScope) and DiT (e.g., CogVideoX), along with the constructed benchmark, has been released.
 - [2025.03.31] Paper and project page released.
 
-## ToDo List
+## ✅ ToDo List
 - [ ] Implementations based on WanVideo
 - [x] Implementations based on CogVideoX
 - [x] Implementations based on ZeroScope and ModelScope
 
 
-## Project Directory Overview
+## 📁 Project Overview
 
 - `datasets/`
 
@@ -67,7 +70,7 @@ This directory includes implementations of JointTuner on different text-to-video
 
 Contains the evaluation code of our proposed benchmark, used to assess the performance of the models. For detailed implementation steps, refer to the `README.md` in the respective folder.
 
-## Quik Start
+## ⚡ Quik Start
 
 - **Setup**
 
@@ -94,7 +97,7 @@ cd examples/CogVideo
 
 and refer to the `README.md` for training, and inference details.
 
-## GPU Requirements
+## 💻 GPU Requirements
 
 - **JointTuner based on ZeroScope or ModelScope**: Training and inference are performed on a single **RTX 4090 GPU** with **24GB VRAM**. 
 
@@ -102,7 +105,7 @@ and refer to the `README.md` for training, and inference details.
 
 - **JointTuner based on CogVideoX-5B**: Training and inference are performed on a single **NVIDIA A100 GPU** with **40GB VRAM**. 
 
-## Citation
+## 📚 Citation
 
 
 ```bibtex
@@ -114,5 +117,5 @@ and refer to the `README.md` for training, and inference details.
 }
 ```
 
-## Thanks
+## ❤️ Thanks
 - This code builds on [diffusers](https://github.com/huggingface/diffusers), [MotionDirector](https://github.com/showlab/MotionDirector) and [CogVideo](https://github.com/zai-org/CogVideo). Thanks for open-sourcing!
