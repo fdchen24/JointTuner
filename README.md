@@ -46,24 +46,30 @@ JointTuner is architecture-agnostic and supports both:
 
 ## Project Directory Overview
 
-### datasets
-Contains various datasets of our proposed benchmark. This directory includes three subfolders: `subject`, `motion_16f` and `motion_49f`.
+- `datasets/`
 
-- `subject`: Contains data files related to subjects.
-- `motion_16f`: Contains data videos related to motions with 16 frames.
-- `motion_49f`: Contains data videos related to motions with 49 frames.
+Contains various datasets of our proposed benchmark. This directory includes three subfolders.
 
-### examples
-This directory includes implementations of JointTuner on different text-to-video models:
-- `ZeroScope` and `ModelScope` share a common codebase. For specific implementation steps, refer to the `README.md` in the `ZeroScope` folder.
-- In `CogVideo`, both `CogVideoX-2B` and `CogVideoX-5B` share a common codebase. The implementation in the `CogVideo` folder can be found with the respective `README.md` for detailed instructions.
+`subject/`: Contains data files related to subjects.
+`motion_16f/`: Contains data videos related to motions with 16 frames.
+`motion_49f/`: Contains data videos related to motions with 49 frames.
 
-### metrics
+- `examples/`
+
+This directory includes implementations of JointTuner on different text-to-video models.
+
+`ZeroScope/` and `ModelScope/`: ZeroScope and ModelScope share a common codebase. For specific implementation steps, refer to the `README.md` in the `ZeroScope/` folder.
+
+`CogVideo/`: In CogVideo, both CogVideoX-2B and CogVideoX-5B share a common codebase. The implementation in the CogVideo folder can be found with the respective `README.md` for detailed instructions.
+
+
+- `metrics/`
+
 Contains the evaluation code of our proposed benchmark, used to assess the performance of the models. For detailed implementation steps, refer to the `README.md` in the respective folder.
 
 ## Quik Start
 
-- Setup
+- **Setup**
 
 ```
 git clone https://github.com/fdchen24/JointTuner.git
@@ -72,7 +78,7 @@ cd JointTuner
 
 To get started with JointTuner, simply navigate to the examples directory and choose your preferred base text-to-video model:
 
-- For UNet-based models (e.g., ZeroScope or ModelScope), go to:
+- For **UNet-based models** (e.g., ZeroScope or ModelScope), go to:
 
 ```bash
 cd examples/ZeroScope
@@ -80,7 +86,7 @@ cd examples/ZeroScope
 
 and follow the instructions in the `README.md`.
 
-- For DiT-based models (e.g., CogVideoX-2B or CogVideoX-5B), go to:
+- For **DiT-based models** (e.g., CogVideoX-2B or CogVideoX-5B), go to:
 
 ```bash
 cd examples/CogVideo
