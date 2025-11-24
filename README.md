@@ -94,7 +94,7 @@ cd examples/CogVideo
 
 and refer to the `README.md` for training, and inference details.
 
-## Requirements
+## GPU Requirements
 
 - **JointTuner based on ZeroScope or ModelScope**: Training and inference are performed on a single **RTX 4090 GPU** with **24GB VRAM**. 
 
