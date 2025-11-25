@@ -1,9 +1,15 @@
 
 <p align="center">
 
-  <h2 align="center">
+  <!-- <h2 align="center" style="vertical-align: middle; margin-right: 2px;">
   <img src="asserts/favicon.ico" alt="JointTuner Icon" width="48" height="48" style="vertical-align: middle; margin-right: 2px;">
   JointTuner: Appearance-Motion Adaptive Joint Training for Customized Video Generation
+  </h2> -->
+  <h2 align="center">
+  <div style="display: flex; align-items: flex-start; justify-content: center;">
+    <img src="asserts/favicon.ico" alt="JointTuner Icon" width="48" height="48" style="margin-right: 12px; margin-top: 0;">
+    <span style="font-size: 1.5em;">JointTuner: Appearance-Motion Adaptive Joint Training for Customized Video Generation</span>
+  </div>
   </h2>
   <p align="center">
     <a href="https://fdchen24.github.io/"><strong>Fangda Chen</strong></a>
