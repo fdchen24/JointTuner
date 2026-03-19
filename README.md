@@ -22,7 +22,7 @@
     <b>National University of Defense Technology &nbsp;·&nbsp; Alibaba International Digital Commerce Group</b>
   </p>
 
-https://github.com/user-attachments/assets/a1eef2b4-55ba-43a9-998a-864970442244
+https://github.com/user-attachments/assets/c7703569-189c-444e-a954-c3e88ba058dd
 
 <p align="center">
 <em>JointTuner enables joint optimization of appearance and motion for high-fidelity customized video generation, mitigating concept interference and appearance contamination.</em>
