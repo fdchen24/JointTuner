@@ -42,7 +42,8 @@ JointTuner is architecture-agnostic and supports both:
 - [2025.03.31] Paper and project page released.
 
 ## ✅ ToDo List
-- [ ] Implementations based on WanVideo
+- [ ] Release the code implemented on WanVideo
+- [x] Implementations based on WanVideo
 - [x] Implementations based on CogVideoX
 - [x] Implementations based on ZeroScope and ModelScope
 
