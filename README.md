@@ -34,8 +34,8 @@ Given reference images (for appearance) and reference videos (for motion), the t
 
 ## 🔧 Compatibility
 JointTuner is architecture-agnostic and supports both:
-- **UNet-based models** (e.g., ZeroScope)
-- **Diffusion Transformer (DiT)-based models** (e.g., CogVideoX)
+- **UNet-based models** (e.g., ZeroScope, ModelScope)
+- **Diffusion Transformer-based models** (e.g., CogVideo-2B/5B, Wan2.1-1.3B)
 
 ## 📰 News
 - [2025.08.06] The code for JointTuner, implemented based on UNet (e.g., ZeroScope and ModelScope) and DiT (e.g., CogVideoX), along with the constructed benchmark, has been released.
@@ -73,30 +73,189 @@ Contains the evaluation code of our proposed benchmark, used to assess the perfo
 
 ## ⚡ Quik Start
 
-- **Setup**
+### Setup
 
 ```
 git clone https://github.com/fdchen24/JointTuner.git
 cd JointTuner
 ```
 
-To get started with JointTuner, simply navigate to the examples directory and choose your preferred base text-to-video model:
+To get started with JointTuner, simply navigate to the examples directory and choose your preferred base text-to-video model.
 
-- For **UNet-based models** (e.g., ZeroScope or ModelScope), go to:
+### UNet-based models (ZeroScope or ModelScope)
+
+1. **Enter the specified project**
 
 ```bash
 cd examples/ZeroScope
 ```
 
-and follow the instructions in the `README.md`.
+2. **GPU Requirements**
 
-- For **DiT-based models** (e.g., CogVideoX-2B or CogVideoX-5B), go to:
+The training and inference are conducted on 1 RTX 4090 GPU (24GB VRAM)
+
+3. **Environment**
+
+```shell
+cd examples/ZeroScope
+
+conda create -n jointtuner-zs python=3.8
+conda activate jointtuner-zs
+
+pip install -r requirements.txt
+```
+
+4. **Downloading pretrained models**
+
+```shell
+# For ZeroScope 
+huggingface-cli download cerspense/zeroscope_v2_576w --resume-download
+
+# For ModelScope
+huggingface-cli download damo-vilab/text-to-video-ms-1.7b --resume-download
+```
+
+5. **Training**
+
+```shell
+python train.py --config configs/JointTuner/bear_plushie_person_playing_flute.yaml
+```
+
+
+6. **Inference**
+
+```shell
+bash run_infer.sh
+```
+
+
+### CogVideo-based models (CogVideoX-2B/5B)
+
+1. **Enter the specified project**
 
 ```bash
 cd examples/CogVideo
 ```
 
-and refer to the `README.md` for training, and inference details.
+2. **GPU Requirements**
+
+- For CogVideoX-2B, the training and inference are conducted on 1 RTX 4090 GPU (24GB VRAM)
+
+- For CogVideoX-5B, the training and inference are conducted on 1 A100 GPU (40GB VRAM)
+
+3. **Environment**
+
+```shell
+cd examples/CogVideo
+
+conda create -n jointtuner-cog python=3.10
+conda activate jointtuner-cog
+
+pip install -r requirements.txt
+```
+
+4. **Downloading pretrained models**
+
+```shell
+# For CogVideoX-2B 
+huggingface-cli download zai-org/CogVideoX-2b --resume-download
+
+# For CogVideoX-5B
+huggingface-cli download zai-org/CogVideoX-5b --resume-download
+```
+
+5. **Training**
+
+```shell
+cd finetune
+bash train_jointtuner.sh
+```
+
+
+6. **Inference**
+
+```shell
+bash run_infer.sh
+```
+
+### Evaluate
+
+1. **Environment**
+
+```shell
+cd metrics
+
+conda create -n jointtuner-eval python=3.10
+conda activate jointtuner-eval
+
+pip install torch==2.4.1 torchvision==0.19.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cu118
+
+git clone https://github.com/Vchitect/VBench.git
+
+pip install -r requirements.txt
+```
+
+2. **Modify vbench output format**
+
+```python
+# These changes are in VBench/vbench/__init__.py
+class VBench(object):
+    def __init__(self, device, full_info_dir, output_path):
+        self.device = device                        # cuda or cpu
+        self.full_info_dir = full_info_dir          # full json file that VBench originally provides
+        self.output_path = output_path              # output directory to save VBench results
+        if len(output_path) > 0:
+            os.makedirs(self.output_path, exist_ok=True)
+
+    def evaluate(self, videos_path, name, prompt_list=[], dimension_list=None, local=False, read_frame=False, mode='vbench_standard', **kwargs):
+        results_dict = {}
+        if dimension_list is None:
+            dimension_list = self.build_full_dimension_list()
+        submodules_dict = init_submodules(dimension_list, local=local, read_frame=read_frame)
+
+        cur_full_info_path = self.build_full_info_json(videos_path, name, dimension_list, prompt_list, mode=mode, **kwargs)
+        
+        for dimension in dimension_list:
+            try:
+                dimension_module = importlib.import_module(f'vbench.{dimension}')
+                evaluate_func = getattr(dimension_module, f'compute_{dimension}')
+            except Exception as e:
+                raise NotImplementedError(f'UnImplemented dimension {dimension}!, {e}')
+            submodules_list = submodules_dict[dimension]
+            results = evaluate_func(cur_full_info_path, self.device, submodules_list, **kwargs)
+            results_dict[dimension] = results
+        if len(self.output_path) > 0:
+            output_name = os.path.join(self.output_path, name+'_eval_results.json')
+            if get_rank() == 0:
+                save_json(results_dict, output_name)
+                print0(f'Evaluation results saved to {output_name}')
+        else:
+            return results_dict
+```
+
+3. **Install VBench**
+```shell
+cd VBench
+
+pip install .
+```
+
+4. **Downloading pretrained models**
+
+```shell
+# For CogVideoX-2B 
+huggingface-cli download laion/CLIP-ViT-H-14-laion2B-s32B-b79K --resume-download
+
+# For CogVideoX-5B
+huggingface-cli download yuvalkirstain/PickScore_v1 --resume-download
+```
+
+5. **Evaluating**
+
+```shell
+bash eval_folder.sh
+```
+
 
 ## 💻 GPU Requirements
 
@@ -119,4 +278,4 @@ and refer to the `README.md` for training, and inference details.
 ```
 
 ## ❤️ Thanks
-- This code builds on [diffusers](https://github.com/huggingface/diffusers), [MotionDirector](https://github.com/showlab/MotionDirector) and [CogVideo](https://github.com/zai-org/CogVideo). Thanks for open-sourcing!
+- This code builds on [diffusers](https://github.com/huggingface/diffusers), [MotionDirector](https://github.com/showlab/MotionDirector), [CogVideo](https://github.com/zai-org/CogVideo) and [VBench]([VBench/prompts at master · Vchitect/VBench](https://github.com/Vchitect/VBench)). Thanks for open-sourcing!
